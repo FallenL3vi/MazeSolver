@@ -109,7 +109,57 @@ class Maze():
 
                 self._break_walls_r(new_target[0],new_target[1])
                 #self._draw_cell(column, row)
-        print("LOOP END")
+    
+    def solve(self):
+        return self._solve_r(0, 0)
+
+    def _solve_r(self, column, row):
+        self._animate()
+        self._cells[column][row].visited = True
+        print(f"Current {column} : {row}")
+        if self._cells[column][row] == self._cells[self.num_cols-1][self.num_rows-1]:
+            return True
+
+        found = False
+        if column - 1 >= 0:
+            target_cell = self._cells[column-1][row]
+            if target_cell.visited == False and target_cell.has_down_wall == False:
+                self._cells[column][row].draw_move(target_cell)
+                found = self._solve_r(column-1, row)
+                if found == False:
+                    self._cells[column][row].draw_move(target_cell, True)
+                else:
+                    return True
+        if column + 1 <= self.num_cols - 1:
+            target_cell = self._cells[column+1][row]
+            if target_cell.visited == False and target_cell.has_up_wall == False:
+                self._cells[column][row].draw_move(target_cell)
+                found = self._solve_r(column+1, row)
+                if found == False:
+                    self._cells[column][row].draw_move(target_cell, True)
+                else:
+                    return True
+        if row + 1 <= self.num_rows - 1:
+            target_cell = self._cells[column][row+1]
+            if target_cell.visited == False and target_cell.has_left_wall == False:
+                self._cells[column][row].draw_move(target_cell)
+                found = self._solve_r(column, row+1)
+                if found == False:
+                    self._cells[column][row].draw_move(target_cell, True)
+                else:
+                    return True
+        if row - 1 >= 0:
+            target_cell = self._cells[column][row-1]
+            if target_cell.visited == False and target_cell.has_right_wall == False:
+                self._cells[column][row].draw_move(target_cell)
+                found = self._solve_r(column, row+1)
+                if found == False:
+                    self._cells[column][row].draw_move(target_cell, True)
+                else:
+                    return True
+        return found
+
+
     
     def _reset_cells_visited(self):
         for col in self._cells:

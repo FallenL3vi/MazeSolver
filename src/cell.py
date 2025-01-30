@@ -49,10 +49,10 @@ class Cell():
             self._window.draw_line(new_line, "white")
     
     def draw_move(self, to_cell, undo = False):
-        color = "red"
+        color = "green"
         if undo:
             color = "grey"
-        start_point = Point((self._x1 + self.__2)/2, (self._y1 + self._y2)/2)
+        start_point = Point((self._x1 + self._x2)/2, (self._y1 + self._y2)/2)
         end_point = Point((to_cell._x1 + to_cell._x2)/2, (to_cell._y1 + to_cell._y2)/2)
         new_line = Line(start_point, end_point)
         self._window.draw_line(new_line, color)

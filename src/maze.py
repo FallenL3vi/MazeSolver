@@ -80,7 +80,7 @@ class Maze():
                 
                 if len(to_visit) == 0:
                     #Comment this line to elimnate backtracking
-                    self._draw_cell(column, row)
+                    #self._draw_cell(column, row)
                     if column == 0 and row == 0:
                         break
                     return
@@ -104,7 +104,7 @@ class Maze():
 
                     #self._draw_cell(new_target[0],new_target[1])
                 #Uncomment this line to show path
-                #self._draw_cell(column, row)
+                self._draw_cell(column, row)
 
 
                 self._break_walls_r(new_target[0],new_target[1])
@@ -115,8 +115,9 @@ class Maze():
 
     def _solve_r(self, column, row):
         self._animate()
+        #print(f"Current {column} : {row}")
         self._cells[column][row].visited = True
-        print(f"Current {column} : {row}")
+        
         if self._cells[column][row] == self._cells[self.num_cols-1][self.num_rows-1]:
             return True
 
@@ -152,7 +153,7 @@ class Maze():
             target_cell = self._cells[column][row-1]
             if target_cell.visited == False and target_cell.has_right_wall == False:
                 self._cells[column][row].draw_move(target_cell)
-                found = self._solve_r(column, row+1)
+                found = self._solve_r(column, row-1)
                 if found == False:
                     self._cells[column][row].draw_move(target_cell, True)
                 else:
@@ -170,4 +171,4 @@ class Maze():
         if self._win is None:
             return
         self._win.redraw()
-        time.sleep(0.1)
+        time.sleep(0.001)

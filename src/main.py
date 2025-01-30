@@ -3,9 +3,9 @@ from maze import Maze
 
     
 def  main():
-    win = Window(800, 600)
+    win = Window(1280, 720)
 
-    maze = Maze(10,10,5,5,30,30,win)
+    maze = Maze(1,1,30,30,20,20,win)
     maze.solve()
 
     win.wait_for_close()
